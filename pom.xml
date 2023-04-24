@@ -14,4 +14,32 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson
+        biblioteca Java que ajuda a converter objetos Java em JSON e vice-versa-->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit
+        biblioteca Java para consumir APIs RESTful. Ela é usada para enviar requisições HTTP e processar as respostas recebidas -->
+        <dependency>
+            <groupId>com.squareup.retrofit2</groupId>
+            <artifactId>retrofit</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql
+         usada para conectar o projeto Java com um banco de dados PostgreSQL,
+         permitindo que o projeto realize operações de leitura e gravação de dados no banco. -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.5.4</version>
+        </dependency>
+
+    </dependencies>
+
+
+
 </project>
