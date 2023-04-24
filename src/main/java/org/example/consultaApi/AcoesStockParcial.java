@@ -4,6 +4,7 @@ package org.example.consultaApi;
 import org.example.dadosApi.AcoesStock;
 
 import com.google.gson.Gson;
+import org.example.dadosApi.DadosAcoes;
 
 import java.io.IOException;
 import java.net.URI;
@@ -16,9 +17,15 @@ public class AcoesStockParcial {
 
     private static Scanner teclado = new Scanner(System.in);
     public static void acoesAvailableParcial() throws IOException, InterruptedException {
-        AcoesStockParcial newAcoesAval = new AcoesStockParcial();
-        AcoesStock meuEstoque = newAcoesAval.acoesParciais();
+        AcoesStockParcial newAcoesParc = new AcoesStockParcial();
+        AcoesStock meuEstoque = newAcoesParc.acoesParciais();
 
+        for (String acao : meuEstoque.getStocks()) {
+            System.out.println("Informações da ação " + acao + ":");
+            for (DadosAcoes.Resultado resultado : newAcoesParc.getAcoesParciais(acao).getResultados()) {
+                System.out.println(resultado.toString());
+            }
+        }
     }
 
     public AcoesStock acoesParciais() throws IOException, InterruptedException {
@@ -36,4 +43,18 @@ public class AcoesStockParcial {
         System.out.println(estoque);
         return estoque;
     }
+
+    DadosAcoes getAcoesParciais(String acao) throws IOException, InterruptedException {
+        String endereco = "https://brapi.dev/api/quote/" + acao;
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(endereco)).build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        String json = response.body();
+        Gson gson = new Gson();
+        DadosAcoes dadosAcoes = gson.fromJson(json, DadosAcoes.class);
+        return dadosAcoes;
+    }
+
+
 }

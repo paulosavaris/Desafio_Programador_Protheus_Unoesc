@@ -1,6 +1,7 @@
 package org.example.consultaApi;
 
 import com.google.gson.Gson;
+import org.example.dadosApi.DadosAcoes;
 
 import java.io.IOException;
 import java.net.URI;
@@ -24,9 +25,15 @@ public class InformacoesDasAcoes {
         HttpResponse<String> reponse = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         String json = reponse.body();
-        System.out.println(json);
+        //System.out.println(json);
+        Gson gson = new Gson();
+        DadosAcoes minhaAcao = gson.fromJson(json, DadosAcoes.class);
 
-        return acao = null;
+        for (DadosAcoes.Resultado resultado : minhaAcao.getResultados()) { // percorre o Array para poder trazer mais de uma acao
+            System.out.println("TEste 1  " + resultado.toString());
+        }
+
+        return acao;
     }
 
 }

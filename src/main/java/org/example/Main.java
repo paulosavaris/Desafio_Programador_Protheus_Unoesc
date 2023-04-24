@@ -36,8 +36,8 @@ public class Main {
         System.out.println("""
                 API brapi - ESCOLHA UMA OPÇÃO:
                 1 - Consultar dados das acoes, individual ou em grupo.
-                2 - Consulta grupos de acoes com as mesma letras informadas.
-                3 - Consulta todas as acoes ( recomendavel rodar a cada inicializacao do programa).
+                2 - Consulta todas as acoes ( recomendavel rodar a cada inicializacao do programa).
+                3 - Consulta grupos de acoes com as mesma letras informadas.
                 4 - Exportar Arquivo CSV.
                 7 - Sair / finalizar aplicação 
                 """);
