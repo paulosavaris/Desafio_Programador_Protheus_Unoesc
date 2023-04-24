@@ -2,6 +2,7 @@ package org.example.consultaApi;
 
 import com.google.gson.Gson;
 import org.example.dadosApi.DadosAcoes;
+import org.example.postgres.InsercaoBanco;
 
 import java.io.IOException;
 import java.net.URI;
@@ -28,10 +29,14 @@ public class InformacoesDasAcoes {
         //System.out.println(json);
         Gson gson = new Gson();
         DadosAcoes minhaAcao = gson.fromJson(json, DadosAcoes.class);
+        InsercaoBanco inserteBD = new InsercaoBanco();
 
         for (DadosAcoes.Resultado resultado : minhaAcao.getResultados()) { // percorre o Array para poder trazer mais de uma acao
             System.out.println("TEste 1  " + resultado.toString());
+            inserteBD.inserirAcao(resultado);
+            inserteBD.inserirCotacao(resultado);
         }
+        System.out.println("Ações salvas no banco de dados");
 
         return acao;
     }

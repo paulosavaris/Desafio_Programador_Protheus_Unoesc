@@ -3,6 +3,7 @@ package org.example.consultaApi;
 import com.google.gson.Gson;
 import org.example.dadosApi.AcoesStock;
 import org.example.dadosApi.DadosAcoes;
+import org.example.postgres.InsercaoBanco;
 
 import java.io.IOException;
 import java.net.URI;
@@ -18,11 +19,18 @@ public class TodasAcoes {
     public static void allStocks() throws IOException, InterruptedException {
         TodasAcoes newAcoes = new TodasAcoes();
         AcoesStock meuEstoque = newAcoes.consultaAcoesStock();
+
+        InsercaoBanco insercaoBanco = new InsercaoBanco();
+
         int quantidade = 0;
         for (String acao : meuEstoque.getStocks()) {
             System.out.println("Informações da ação " + acao + ":");
             for (DadosAcoes.Resultado resultado : newAcoes.getDadosAcoes(acao).getResultados()) {
-                System.out.println(resultado.toString());
+                //System.out.println(resultado.toString());
+                System.out.println("Baixando informacoes no banco de dados");
+                insercaoBanco.inserirAcao(resultado);
+                insercaoBanco.inserirCotacao(resultado);
+                System.out.println("Informacoes baixadas no banco de dados");
             }
             quantidade++;
         }
@@ -47,7 +55,7 @@ public class TodasAcoes {
 
     DadosAcoes getDadosAcoes(String acao) throws IOException, InterruptedException {
         String endereco = "https://brapi.dev/api/quote/" + acao;
-        //System.out.println("seilaaaaaaaa  " + acao);
+
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(endereco)).build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

@@ -5,6 +5,7 @@ import org.example.dadosApi.AcoesStock;
 
 import com.google.gson.Gson;
 import org.example.dadosApi.DadosAcoes;
+import org.example.postgres.InsercaoBanco;
 
 import java.io.IOException;
 import java.net.URI;
@@ -20,10 +21,14 @@ public class AcoesStockParcial {
         AcoesStockParcial newAcoesParc = new AcoesStockParcial();
         AcoesStock meuEstoque = newAcoesParc.acoesParciais();
 
+        InsercaoBanco insercaoBanco = new InsercaoBanco();
+
         for (String acao : meuEstoque.getStocks()) {
             System.out.println("Informações da ação " + acao + ":");
             for (DadosAcoes.Resultado resultado : newAcoesParc.getAcoesParciais(acao).getResultados()) {
                 System.out.println(resultado.toString());
+                insercaoBanco.inserirAcao(resultado);
+                insercaoBanco.inserirCotacao(resultado);
             }
         }
     }

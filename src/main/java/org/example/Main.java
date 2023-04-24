@@ -3,6 +3,7 @@ package org.example;
 import org.example.consultaApi.AcoesStockParcial;
 import org.example.consultaApi.InformacoesDasAcoes;
 import org.example.consultaApi.TodasAcoes;
+import org.example.postgres.ExportaAcoes;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -22,6 +23,8 @@ public class Main {
                         break;
                     case 3: consultarAcoesParciais();
                         break;
+                    case 4: ExportAcoes();
+                        break;
                 }
             } catch (Exception e){
                 System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu");
@@ -36,7 +39,8 @@ public class Main {
         System.out.println("""
                 API brapi - ESCOLHA UMA OPÇÃO:
                 1 - Consultar dados das acoes, individual ou em grupo.
-                2 - Consulta todas as acoes ( recomendavel rodar a cada inicializacao do programa).
+                2 - Consulta todas as acoes ( recomendavel rodar a cada inicializacao do programa 
+                pois baixa todas as informacoes das acoes no banco).
                 3 - Consulta grupos de acoes com as mesma letras informadas.
                 4 - Exportar Arquivo CSV.
                 7 - Sair / finalizar aplicação 
@@ -68,5 +72,14 @@ public class Main {
 
         System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu principal");teclado.next();
     }
+
+    private static void ExportAcoes(){
+        ExportaAcoes exportAcoes = new ExportaAcoes();
+        exportAcoes.exportaAcoes();
+
+        System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu principal");
+        teclado.nextLine();
+    }
+
 
 }
