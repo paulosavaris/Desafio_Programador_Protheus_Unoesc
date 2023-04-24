@@ -8,9 +8,11 @@ public class ConexaoFactory {
 
     public Connection recuperaConexao() {
         try {
+            // Recupera uma conexão com o banco de dados Postgres
             return DriverManager
-                    .getConnection("jdbc:postgresql://localhost:5432/unoescapi?user=postgres&password=System01"); //dados do banco
+                    .getConnection("jdbc:postgresql://localhost:5432/apiunoesc?user=postgres&password=System01"); //dados do banco
         }catch (SQLException e){
+            // Lança uma exceção em caso de falha na conexão
             throw new RuntimeException(e);
         }
     }

@@ -10,18 +10,22 @@ import java.sql.SQLException;
 public class AcoesDAO {
 
     private Connection conexao;
+    // Construtor da classe que recebe uma conexão já estabelecida
     public AcoesDAO(Connection connection){
         this.conexao = connection;
     }
     
     public void insertAcoes(DadosAcoes.Resultado resultado){
+        // String SQL para inserir dados na tabela "acao" com as colunas "simbolo" e "nome"
         String sql =  "Insert into acao(simbolo, nome) values(?, ?)";
         try {
+            // Preparação da declaração SQL com os dados a serem inseridos
+
             PreparedStatement pstmt = conexao.prepareStatement(sql);
 
             pstmt.setString(1, resultado.getSimbolo());
             pstmt.setString(2, resultado.getNome());
-            pstmt.execute();
+            pstmt.execute();// Execução da declaração SQL
 
         }catch (SQLException e) {
             if (e.getSQLState().equals("23505")) { // verificar se a exceção é de chave duplicada
@@ -31,7 +35,6 @@ public class AcoesDAO {
                     String log = "INSERT INTO log (informacao, data_hora) VALUES (?, CURRENT_TIMESTAMP)";
                     PreparedStatement stmt = conexao.prepareStatement(log);
                     stmt.setString(1, "Tentativa de inserção de simbolo já existente na tabela acao: " + resultado.getSimbolo());
-                    // stmt.setInt(2,);
                     stmt.executeUpdate();
                 } catch (SQLException ex) {
                     System.out.println("Erro ao inserir registro de log: " + ex.getMessage());

@@ -14,11 +14,13 @@ public class ExportaAcoes {
     private static Scanner teclado = new Scanner(System.in);
     public void exportaAcoes() {
 
-        Connection conexao = recuperaConexao();
-        System.out.println("Informe uma acao, nao precisa ser o nome inteiro.");
-        System.out.println("Exemplo: PETR4 ou pet ou cog");
+        Connection conexao = recuperaConexao(); // conexao com BD
+        System.out.println("Informe uma ou mais acoes separadas por vírgula (ex: PETR4,MGLU3,B3SA3):");
+        System.out.println("NAO pode conter espaco apos a virgula, nao tem tratamento para essa situacao");
         var acao = teclado.next();
+        // Transforma a string de ações em uma lista
         List<String> acoesList = Arrays.asList(acao.split(","));
+        // Adiciona aspas simples em cada elemento da lista e junta todos os elementos com vírgulas
         String acoes = ("'" + String.join("', '", acoesList) + "'").toUpperCase();
 
         //System.out.println(acoes);
@@ -27,6 +29,7 @@ public class ExportaAcoes {
         System.out.println("O arquivo sera salvo no diretorio da aplicao ../ApiUnoesc");
         String arquivo = teclado.next();
 
+        // Recupera o diretório atual da aplicação e monta o caminho completo do arquivo que será gerado
         String dir = System.getProperty("user.dir").replaceAll("\\\\", "/");
         String caminhoSql = dir + "/" + arquivo + ".csv";
 
@@ -44,6 +47,7 @@ public class ExportaAcoes {
         //System.out.println(sql);
 
         try{
+            // Cria um Statement para executar o comando SQL
             PreparedStatement stm = conexao.prepareStatement(sql);
             stm.execute();
             stm.close();
@@ -55,7 +59,7 @@ public class ExportaAcoes {
     public static Connection recuperaConexao() {
         try {
             return DriverManager
-                    .getConnection("jdbc:postgresql://localhost:5432/unoescapi?user=postgres&password=System01");
+                    .getConnection("jdbc:postgresql://localhost:5432/apiunoesc?user=postgres&password=System01");
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
